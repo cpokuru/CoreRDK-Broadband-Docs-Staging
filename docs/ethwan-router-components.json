@@ -1,0 +1,129 @@
+{
+  "schemaVersion": "1.0",
+  "generatedAt": "2026-08-03T17:26:17Z",
+  "title": "RDK-B EthWAN WiFi Router Components",
+  "subtitle": "Components required for the EthWAN WiFi Router device profile.",
+  "tiers": [
+    {
+      "id": "required",
+      "label": "Required",
+      "color": "blue"
+    }
+  ],
+  "components": [
+    {
+      "name": "OneWiFi",
+      "category": "LAN Interface Components",
+      "tier": "required",
+      "url": "https://github.com/rdkcentral/OneWifi"
+    },
+    {
+      "name": "lan-manager-lite",
+      "category": "LAN Management Components",
+      "tier": "required",
+      "url": "https://github.com/rdkcentral/lan-manager-lite"
+    },
+    {
+      "name": "Ethernet Agent (used for WAN)",
+      "category": "WAN Interface Components",
+      "tier": "required",
+      "url": "https://github.com/rdkcentral/ethernet-agent"
+    },
+    {
+      "name": "dhcp-manager (recipe for DHCP client and Server)",
+      "category": "DHCP",
+      "tier": "required",
+      "url": "https://github.com/rdkcentral/dhcp-manager"
+    },
+    {
+      "name": "P&M",
+      "category": "Routing, parental control and WAN Management Components",
+      "tier": "required",
+      "url": "https://github.com/rdkcentral/provisioning-and-management"
+    },
+    {
+      "name": "WAN Manager",
+      "category": "Routing, parental control and WAN Management Components",
+      "tier": "required",
+      "url": "https://github.com/rdkcentral/wan-manager"
+    },
+    {
+      "name": "core-net-library",
+      "category": "Routing, parental control and WAN Management Components",
+      "tier": "required",
+      "url": "https://github.com/rdkcentral/core-net-library"
+    },
+    {
+      "name": "Utopia",
+      "category": "System Start, Platform Management and misc utilities",
+      "tier": "required",
+      "url": "https://github.com/rdkcentral/utopia"
+    },
+    {
+      "name": "component-registry",
+      "category": "System Start, Platform Management and misc utilities",
+      "tier": "required",
+      "url": "https://github.com/rdkcentral/component-registry"
+    },
+    {
+      "name": "miscellaneous-broadband",
+      "category": "System Start, Platform Management and misc utilities",
+      "tier": "required",
+      "url": "https://github.com/rdkcentral/miscellaneous-broadband"
+    },
+    {
+      "name": "sysint-broadband",
+      "category": "System Start, Platform Management and misc utilities",
+      "tier": "required",
+      "url": "https://github.com/rdkcentral/sysint-broadband"
+    },
+    {
+      "name": "common utilities",
+      "category": "System Start, Platform Management and misc utilities",
+      "tier": "required",
+      "url": "https://github.com/rdkcentral/common_utilities/"
+    },
+    {
+      "name": "rdk_logger",
+      "category": "Data Collection, Test and Diagnostic Components",
+      "tier": "required",
+      "url": "https://github.com/rdkcentral/rdk_logger"
+    },
+    {
+      "name": "remote_debugger",
+      "category": "Data Collection, Test and Diagnostic Components",
+      "tier": "required",
+      "url": null
+    },
+    {
+      "name": "RBUS",
+      "category": "InterProcess Communications Components",
+      "tier": "required",
+      "url": "https://github.com/rdkcentral/rbus"
+    },
+    {
+      "name": "common-library",
+      "category": "InterProcess Communications Components",
+      "tier": "required",
+      "url": "https://github.com/rdkcentral/common-library"
+    },
+    {
+      "name": "DMCLI",
+      "category": "InterProcess Communications Components",
+      "tier": "required",
+      "url": "https://github.com/rdkcentral/data-model-cli"
+    },
+    {
+      "name": "PSM",
+      "category": "Non-Vol Storage",
+      "tier": "required",
+      "url": "https://github.com/rdkcentral/persistent-storage-manager"
+    },
+    {
+      "name": "libsyscallwrapper",
+      "category": "Code Security Components",
+      "tier": "required",
+      "url": "https://github.com/rdkcentral/libSyscallWrapper"
+    }
+  ]
+}
