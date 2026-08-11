@@ -50,6 +50,7 @@ def main() -> None:
     prof_p.add_argument("--json-out", default=None)
     prof_p.add_argument("--html-out", default=None)
     prof_p.add_argument("--required-only", action="store_true", help="Omit Optional components; show only Required.")
+    prof_p.add_argument("--show-core", action="store_true", help="Tag CORE components as 'Common Core' instead of Required/Optional.")
 
     args = p.parse_args()
     wb = openpyxl.load_workbook(Path(args.xlsx), data_only=True)
@@ -66,9 +67,15 @@ def main() -> None:
         json_out = args.json_out or "core-b-components.json"
         html_out = args.html_out or "core-components.html"
     else:
-        components = extract_profile(ws, args.profile, required_only=args.required_only)
-        tier_ids = ["required"] if args.required_only else ["required", "optional"]
+        components = extract_profile(ws, args.profile, required_only=args.required_only, show_core=args.show_core)
+        if args.required_only:
+            tier_ids = ["required"]
+        elif args.show_core:
+            tier_ids = ["common-core", "required", "optional"]
+        else:
+            tier_ids = ["required", "optional"]
         subtitle = f"Components required for the {args.profile} device profile." if args.required_only \
+            else f"Components for the {args.profile} device profile: Common Core, Required, and Optional." if args.show_core \
             else f"Components that apply to the {args.profile} device profile."
         payload = build_payload(
             components,

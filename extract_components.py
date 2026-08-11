@@ -93,7 +93,17 @@ def extract_core(ws) -> list[dict]:
     return out
 
 
-def extract_profile(ws, profile: str, required_only: bool = False) -> list[dict]:
+def extract_profile(ws, profile: str, required_only: bool = False, show_core: bool = False) -> list[dict]:
+    """All components that apply to a single device profile column.
+
+    show_core=False (default): tiers are 'required' / 'optional' only, matching
+        the profile column value verbatim (today's simple pages).
+    show_core=True: components flagged CORE ('Core Components' == 'CORE') are
+        tagged 'common-core' instead of their raw Required/Optional value, so
+        the page distinguishes Common Core vs Required vs Optional. Ignored
+        when required_only=True (core components are always required-everywhere
+        by definition, so they'd show as Required either way).
+    """
     if profile not in PROFILE_COLUMNS:
         raise SystemExit(f"Unknown profile {profile!r}. Choose from: {PROFILE_COLUMNS}")
     wanted = ("Required",) if required_only else ("Required", "Optional")
@@ -102,10 +112,11 @@ def extract_profile(ws, profile: str, required_only: bool = False) -> list[dict]
         v = r["profile_values"][profile]
         if v not in wanted:
             continue
+        tier = "common-core" if (show_core and not required_only and r["is_core"]) else v.lower()
         out.append({
             "name": r["name"],
             "category": r["subsystem"],
-            "tier": v.lower(),
+            "tier": tier,
             "url": r["url"],
         })
     return out
@@ -135,6 +146,7 @@ def main() -> None:
     prof_p.add_argument("--xlsx", default="RDK-B_Component_List_2026.xlsx")
     prof_p.add_argument("--out", default="profile-components.json")
     prof_p.add_argument("--required-only", action="store_true", help="Omit Optional components; show only Required.")
+    prof_p.add_argument("--show-core", action="store_true", help="Tag CORE components as 'Common Core' instead of Required/Optional.")
 
     args = p.parse_args()
     wb = openpyxl.load_workbook(Path(args.xlsx), data_only=True)
@@ -149,9 +161,15 @@ def main() -> None:
             tier_ids=["common-core", "required"],
         )
     else:
-        components = extract_profile(ws, args.profile, required_only=args.required_only)
-        tier_ids = ["required"] if args.required_only else ["required", "optional"]
+        components = extract_profile(ws, args.profile, required_only=args.required_only, show_core=args.show_core)
+        if args.required_only:
+            tier_ids = ["required"]
+        elif args.show_core:
+            tier_ids = ["common-core", "required", "optional"]
+        else:
+            tier_ids = ["required", "optional"]
         subtitle = f"Components required for the {args.profile} device profile." if args.required_only \
+            else f"Components for the {args.profile} device profile: Common Core, Required, and Optional." if args.show_core \
             else f"Components that apply to the {args.profile} device profile."
         payload = build_payload(
             components,
