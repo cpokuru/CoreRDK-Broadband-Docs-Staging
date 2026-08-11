@@ -10,6 +10,8 @@ import json
 import sys
 from pathlib import Path
 
+FULL_DETAILS_URL = "https://cpokuru.github.io/CoreRDK-Broadband-Docs"
+
 # Fixed palette for tier badges (id -> css color values), matches schema's color enum.
 TIER_COLORS = {
     "gold":  {"bg": "#fef3c7", "fg": "#92400e"},
@@ -87,6 +89,7 @@ def build_html(data: dict) -> str:
   .pill {{ display: inline-block; padding: 3px 10px; border-radius: 9999px; font-size: 0.85rem; font-weight: 600; }}
   a {{ color: #1d4ed8; text-decoration: underline; }}
   .muted {{ color: #9ca3af; }}
+  .footer-link {{ margin-top: 28px; padding-top: 16px; border-top: 1px solid #e5e7eb; font-size: 0.9rem; }}
 </style>
 </head>
 <body>
@@ -98,6 +101,7 @@ def build_html(data: dict) -> str:
     <thead><tr><th>Name</th><th>Category</th><th>Tier</th><th>URL</th></tr></thead>
     <tbody>{''.join(rows_html)}</tbody>
   </table>
+  <div class="footer-link">For the full interactive workbook view, see the <a href="{FULL_DETAILS_URL}">detailed version</a>.</div>
 </body>
 </html>
 '''
